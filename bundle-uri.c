@@ -577,7 +577,7 @@ cleanup:
 	return result;
 }
 
-int fetch_bundle_list(struct repository *r, const char *uri, struct bundle_list *list)
+int fetch_bundle_list(struct repository *r, struct bundle_list *list)
 {
 	int result;
 	struct bundle_list global_list;
@@ -610,7 +610,7 @@ int bundle_uri_advertise(struct repository *r, struct strbuf *value)
 		goto cached;
 
 	advertise_bundle_uri = 0;
-	git_config_get_maybe_bool("uploadpack.advertisebundleuris", &advertise_bundle_uri);
+	repo_config_get_maybe_bool(r, "uploadpack.advertisebundleuris", &advertise_bundle_uri);
 
 cached:
 	return advertise_bundle_uri;
