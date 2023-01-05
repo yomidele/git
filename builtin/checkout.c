@@ -232,7 +232,7 @@ static int checkout_stage(int stage, const struct cache_entry *ce, int pos,
 		pos++;
 	}
 	if (!overlay_mode) {
-		unlink_entry(ce);
+		unlink_entry(ce, NULL);
 		return 0;
 	}
 	if (stage == 2)
@@ -1473,6 +1473,8 @@ static void die_if_some_operation_in_progress(void)
 		      "or \"git worktree add\"."));
 	if (state.bisect_in_progress)
 		warning(_("you are switching branch while bisecting"));
+
+	wt_status_state_free_buffers(&state);
 }
 
 static int checkout_branch(struct checkout_opts *opts,
